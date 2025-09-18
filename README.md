@@ -1,2 +1,2 @@
 # Atividade de Streamlit
-Cliente e serviço.
+Cliente e serviço
