@@ -44,6 +44,8 @@ class ManterClienteUI:
             id= op.get_id()
             View.cliente_atualizar(id, nome, email, fone)
             st.success("Cliente atualizado com sucesso")
+            time.sleep(2)
+            st.rerun()
 
     @classmethod
     def excluir(cls, obj):
