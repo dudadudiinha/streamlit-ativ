@@ -9,4 +9,5 @@ class View:
         cliente = Cliente(id, nome, email, fone)
         ClienteDAO.atualizar(cliente)
     def cliente_excluir(id):
-        ClienteDAO.excluir(id)
+        cliente = Cliente(id, "o", "o", "o")
+        ClienteDAO.excluir(cliente)

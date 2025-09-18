@@ -45,12 +45,9 @@ class ManterClienteUI:
             View.cliente_atualizar(id, nome, email, fone)
             st.success("Cliente atualizado com sucesso")
 
-    def excluir():
-        clientes= View.cliente_listar()
-        if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
-        else:
-            op= st.selectbox("Exclusão de Clientes", clientes)
-            if st.button("Excluir"):
-                id= op.get_id()
-                View.cliente_excluir(id)
-                st.success("Cliente excluído com sucesso")
+    @classmethod
+    def excluir(cls, obj):
+        aux = cls.listar_id(obj.get_id())
+        if aux is not None:
+            cls.__objetos.remove(aux)
+            cls.salvar()
