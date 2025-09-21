@@ -14,8 +14,7 @@ class View:
         ClienteDAO.atualizar(cliente)
 
     def cliente_excluir(id):
-        cliente = Cliente(id, "o", "o", "o")
-        ClienteDAO.excluir(cliente)
+        ClienteDAO.excluir(id)
 
     def servico_listar():
         return ServicoDAO.listar()
@@ -29,5 +28,4 @@ class View:
         ServicoDAO.atualizar(servico)
 
     def servico_excluir(id):
-        servico = Servico(id, "nada", 0)
-        ServicoDAO.excluir(servico)
+        ServicoDAO.excluir(id)

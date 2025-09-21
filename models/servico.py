@@ -52,10 +52,10 @@ class ServicoDAO:
     def inserir(cls, s):
         cls.abrir()
         id = 0
-        for obj in cls.__objetos:
+        for obj in cls.__servicos:
             if obj.get_id() > id:
                 id = obj.get_id()
-        obj.set_id(id+1)
+        s.set_id(id+1)
         cls.__servicos.append(s)
         cls.salvar()
 
@@ -77,7 +77,7 @@ class ServicoDAO:
         obj = cls.listar_id(s.get_id())
         if obj != None:
             cls.__servicos.remove(obj)
-            cls.__append(s)
+            cls.__servicos.append(s)
             cls.salvar()
 
     @classmethod
