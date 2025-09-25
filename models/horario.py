@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 
 class Horario:
-    def __init__(self, id, data):
+    def __init__(self, id, data, confirmado, id_cliente, id_servico):
         self.set_id(id)
         self.set_data(data)
         self.set_confirmado(False)
@@ -13,7 +13,6 @@ class Horario:
         if id < 0: raise ValueError("ID não pode ser negativo.")
         self.__id = id
     def set_data(self, data): 
-        if data < datetime.now(): raise ValueError("A data do agendamento não pode ser no passado.")
         self.__data = data
     def set_confirmado(self, confirmado):
         self.__confirmado = confirmado
@@ -69,7 +68,7 @@ class HorarioDAO:
     def inserir(cls, h):
         cls.abrir()
         id = 0
-        for obj in cls.__objetos:
+        for obj in cls.__horarios:
             if obj.get_id() > id: 
                 id = obj.get_id()
         h.set_id(id+1)
