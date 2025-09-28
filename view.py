@@ -57,7 +57,7 @@ class View:
         HorarioDAO.excluir(id)
 
     def profissional_inserir(nome, especialidade, conselho):
-        p = Horario(0, nome, especialidade, conselho)
+        p = Profissional(0, nome, especialidade, conselho)
         ProfissionalDAO.inserir(p)
 
     def profissional_listar():

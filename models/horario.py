@@ -2,13 +2,13 @@ from datetime import datetime
 import json
 
 class Horario:
-    def __init__(self, id, data, confirmado, id_cliente, id_servico, id_profissional):
+    def __init__(self, id, data, confirmado=False, id_cliente=0, id_servico=0, id_profissional=0):
         self.set_id(id)
         self.set_data(data)
-        self.set_confirmado(False)
-        self.set_id_cliente(0)
-        self.set_id_servico(0)
-        self.set_id_profissional(0)
+        self.set_confirmado(confirmado)
+        self.set_id_cliente(id_cliente)
+        self.set_id_servico(id_servico)
+        self.set_id_profissional(id_profissional)
 
     def set_id(self, id): 
         if id < 0: raise ValueError("ID não pode ser negativo.")
