@@ -93,15 +93,15 @@ class ProfissionalDAO:
     def atualizar(cls, obj):
         cls.abrir()
         aux = cls.listar_id(obj.get_id())
-        if aux is not None:
+        if aux != None:
             cls.__profissionais.remove(aux)
             cls.__profissionais.append(obj)
             cls.salvar()
 
     @classmethod
-    def excluir(cls, obj):
+    def excluir(cls, id):
         cls.abrir()
-        aux = cls.listar_id(obj.get_id())
-        if aux is not None:
+        aux = cls.listar_id(id)
+        if aux != None:
             cls.__profissionais.remove(aux)
             cls.salvar()

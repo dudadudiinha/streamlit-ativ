@@ -83,11 +83,7 @@ class ServicoDAO:
     @classmethod
     def excluir(cls, id):
         cls.abrir()
-        obj_remover = None
-        for obj in cls.__servicos:
-            if obj.get_id() == id:
-                obj_remover = obj
-                break 
-        if obj_remover: 
-            cls.__servicos.remove(obj_remover)
+        obj = cls.listar_id(id)
+        if obj != None:
+            cls.__servicos.remove(obj)
             cls.salvar()

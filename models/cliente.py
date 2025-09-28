@@ -72,13 +72,9 @@ class ClienteDAO:
     @classmethod
     def excluir(cls, id):
         cls.abrir()
-        objeto_a_remover = None
-        for obj in cls.__objetos:
-            if obj.get_id() == id:
-                objeto_a_remover = obj
-                break 
-        if objeto_a_remover: 
-            cls.__objetos.remove(objeto_a_remover)
+        obj = cls.listar_id(id)
+        if obj != None:
+            cls.__objetos.remove(obj)
             cls.salvar()
 
     @classmethod

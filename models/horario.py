@@ -2,12 +2,13 @@ from datetime import datetime
 import json
 
 class Horario:
-    def __init__(self, id, data, confirmado, id_cliente, id_servico):
+    def __init__(self, id, data, confirmado, id_cliente, id_servico, id_profissional):
         self.set_id(id)
         self.set_data(data)
         self.set_confirmado(False)
         self.set_id_cliente(0)
         self.set_id_servico(0)
+        self.set_id_profissional(0)
 
     def set_id(self, id): 
         if id < 0: raise ValueError("ID não pode ser negativo.")
@@ -22,6 +23,9 @@ class Horario:
     def set_id_servico(self, id_servico): 
         if id_servico < 0: raise ValueError("O ID do serviço não pode ser negativo.")
         self.__id_servico = id_servico
+    def set_id_profissional(self, id_profissional):
+        if id_profissional < 0: raise ValueError("O ID do profissional não pode ser negativo.")
+        self.__id_profissional = id_profissional
 
     def get_id(self): 
         return self.__id
@@ -33,17 +37,23 @@ class Horario:
         return self.__id_cliente
     def get_id_servico(self): 
         return self.__id_servico
+    def get_id_profissional(self):
+        return self.__id_profissional
     
     def __str__(self):
         return f"{self.__id} - {self.__data.strftime('%d/%m/%Y %H:%M')} - {self.__confirmado}"
         
     def to_json(self):
-        return {"id": self.__id, "data": self.__data.strftime("%d/%m/%Y %H:%M"), "confirmado": self.__confirmado, "id_cliente": self.__id_cliente, "id_servico": self.__id_servico}
+        return {"id": self.__id, "data": self.__data.strftime("%d/%m/%Y %H:%M"), "confirmado": self.__confirmado, "id_cliente": self.__id_cliente, "id_servico": self.__id_servico, "id_profissional": self.__id_profissional}
     
     @staticmethod
     def from_json(dic):
-        return Horario(dic["id"], datetime.strptime(dic["data"], "%d/%m/%Y %H:%M"), dic["confirmado"], dic["id_cliente"], dic["id_servico"])
-    
+        horario = Horario(dic["id"], datetime.strptime(dic["data"], "%d/%m/%Y %H:%M"))
+        horario.set_confirmado(dic["confirmado"])
+        horario.set_id_cliente(dic["id_cliente"])
+        horario.set_id_servico(dic["id_servico"])
+        horario.set_id_profissional(dic.get("id_profissional", 0))
+        return horario
 class HorarioDAO:
     __horarios= []
 
@@ -99,11 +109,7 @@ class HorarioDAO:
     @classmethod
     def excluir(cls, id):
         cls.abrir()
-        objeto_a_remover = None
-        for obj in cls.__objetos:
-            if obj.get_id() == id:
-                objeto_a_remover = obj
-                break 
-        if objeto_a_remover: 
-            cls.__horarios.remove(objeto_a_remover)
+        obj = cls.listar_id(id)
+        if obj != None:
+            cls.__horarios.remove(obj)
             cls.salvar()

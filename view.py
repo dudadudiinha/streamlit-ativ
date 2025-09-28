@@ -1,6 +1,7 @@
 from models.cliente import Cliente, ClienteDAO
 from models.servico import Servico, ServicoDAO
 from models.horario import Horario, HorarioDAO
+from models.profissional import Profissional, ProfissionalDAO
 from datetime import datetime
 
 class View:
@@ -19,11 +20,10 @@ class View:
         ClienteDAO.atualizar(c)
 
     def cliente_excluir(id):
-        c = Cliente(id, "a", "b", "c")
-        ClienteDAO.excluir(c)
+        ClienteDAO.excluir(id)
 
-    def servico_inserir(descricao, valor, duracao):
-        s = Servico(0, descricao, valor, duracao)
+    def servico_inserir(descricao, valor):
+        s = Servico(0, descricao, valor)
         ServicoDAO.inserir(s)
 
     def servico_listar():
@@ -32,16 +32,15 @@ class View:
     def servico_listar_id(id):
         return ServicoDAO.listar_id(id)
 
-    def servico_atualizar(id, descricao, valor, duracao):
-        s = Servico(id, descricao, valor, duracao)
+    def servico_atualizar(id, descricao, valor):
+        s = Servico(id, descricao, valor)
         ServicoDAO.atualizar(s)
 
     def servico_excluir(id):
-        s = Servico(id, "", 0, 0)
-        ServicoDAO.excluir(s)
+        ServicoDAO.excluir(id)
         
-    def horario_inserir(data, confirmado, id_cliente, id_servico):
-        h = Horario(0, data, confirmado, id_cliente, id_servico)
+    def horario_inserir(data, confirmado, id_cliente, id_servico, id_profissional):
+        h = Horario(0, data, confirmado, id_cliente, id_servico, id_profissional)
         HorarioDAO.inserir(h)
 
     def horario_listar():
@@ -50,10 +49,26 @@ class View:
     def horario_listar_id(id):
         return HorarioDAO.listar_id(id)
         
-    def horario_atualizar(id, data, confirmado, id_cliente, id_servico):
-        h = Horario(id, data, confirmado, id_cliente, id_servico)
+    def horario_atualizar(id, data, confirmado, id_cliente, id_servico, id_profissional):
+        h = Horario(id, data, confirmado, id_cliente, id_servico, id_profissional)
         HorarioDAO.atualizar(h)
 
     def horario_excluir(id):
-        h = Horario(id, datetime.now(), False, 0, 0)
-        HorarioDAO.excluir(h)
+        HorarioDAO.excluir(id)
+
+    def profissional_inserir(nome, especialidade, conselho):
+        p = Horario(0, nome, especialidade, conselho)
+        ProfissionalDAO.inserir(p)
+
+    def profissional_listar():
+        return ProfissionalDAO.listar()
+
+    def profissional_listar_id(id):
+        return ProfissionalDAO.listar_id(id)
+    
+    def profissional_atualizar(id, nome, especialidade, conselho):
+        p = Profissional(id, nome, especialidade, conselho)
+        ProfissionalDAO.atualizar(p)
+
+    def profissional_excluir(id):
+        ProfissionalDAO.excluir(id)
