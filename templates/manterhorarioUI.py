@@ -29,8 +29,8 @@ class ManterHorarioUI:
                 if profissional != None: 
                     profissional = profissional.get_nome()
                 list_dic.append({"id" : obj.get_id(), "data" : obj.get_data(), "confirmado" : obj.get_confirmado(), "cliente" : cliente, "serviço" : servico, "profissional": profissional})
-                df = pd.DataFrame(list_dic)
-                st.dataframe(df)
+            df = pd.DataFrame(list_dic)
+            st.dataframe(df)
 
     def inserir():
         clientes = View.cliente_listar() 
