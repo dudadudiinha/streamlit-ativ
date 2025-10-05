@@ -2,11 +2,13 @@ import json
 from datetime import datetime
 
 class Profissional:
-    def __init__(self, id, nome, especialidade, conselho):
+    def __init__(self, id, nome, especialidade, conselho, email, senha):
         self.set_id(id)
         self.set_nome(nome)
         self.set_especialidade(especialidade)
         self.set_conselho(conselho)
+        self.set_email(email)
+        self.set_senha(senha)
 
     def set_id(self, id):
         if id < 0: raise ValueError("ID não pode ser negativo.")
@@ -20,6 +22,12 @@ class Profissional:
     def set_conselho(self, conselho):
         if conselho == "": raise ValueError("conselho não pode ser vazio.")
         self.__conselho = conselho
+    def set_email(self, email): 
+        if email == "": raise ValueError("E-mail não pode ser vazio.")
+        self.__email = email
+    def set_senha(self, senha): 
+        if senha == "": raise ValueError("Senha não pode ser vazia.")
+        self.__senha = senha
 
     def get_id(self):
         return self.__id
@@ -29,21 +37,18 @@ class Profissional:
         return self.__especialidade
     def get_conselho(self):
         return self.__conselho
+    def get_email(self): return self.__email
+    def get_senha(self): return self.__senha
 
     def __str__(self):
         return f"{self.get_id()} - {self.get_nome()}"
 
     def to_json(self):
-        return {
-            "id": self.__id,
-            "nome": self.__nome,
-            "especialidade": self.__especialidade,
-            "conselho": self.__conselho
-        }
+        return {"id": self.__id, "nome": self.__nome, "especialidade": self.__especialidade, "conselho": self.__conselho, "email":self.__email, "senha": self.__senha}
 
     @staticmethod
     def from_json(dic):
-        return Profissional(dic["id"], dic["nome"], dic["especialidade"], dic["conselho"])
+        return Profissional(dic["id"], dic["nome"], dic["especialidade"], dic["conselho"], dic["email"], dic["senha"])
 
 class ProfissionalDAO:
     __profissionais = []

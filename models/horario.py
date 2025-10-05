@@ -52,7 +52,7 @@ class Horario:
         horario.set_confirmado(dic["confirmado"])
         horario.set_id_cliente(dic["id_cliente"])
         horario.set_id_servico(dic["id_servico"])
-        horario.set_id_profissional(dic.get("id_profissional", 0))
+        horario.set_id_profissional(dic["id_profissional"])
         return horario
 class HorarioDAO:
     __horarios= []
