@@ -9,7 +9,6 @@ class Profissional:
         self.set_conselho(conselho)
         self.set_email(email)
         self.set_senha(senha)
-
     def set_id(self, id):
         if id < 0: raise ValueError("ID não pode ser negativo.")
         self.__id = id

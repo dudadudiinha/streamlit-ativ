@@ -19,10 +19,7 @@ class Cliente:
         self.__email = email
     def set_fone(self, fone): 
         if fone == "": raise ValueError("Telefone não pode ser vazio.")
-        self.__fone = fone 
-    def set_senha(self, senha): 
-        if senha == "": raise ValueError("Senha não pode ser vazia.")
-        self.__senha = senha
+        self.__fone = fone
 
     def get_id(self): return self.__id
     def get_nome(self): return self.__nome
@@ -34,7 +31,7 @@ class Cliente:
         return f"{self.__id} - {self.__nome} - {self.__email} – {self.__fone}"
     
     def to_json(self):
-        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone, "senha": self.__senha}
+        dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone}
         return dic
 
     @staticmethod
