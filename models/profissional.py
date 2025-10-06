@@ -36,8 +36,10 @@ class Profissional:
         return self.__especialidade
     def get_conselho(self):
         return self.__conselho
-    def get_email(self): return self.__email
-    def get_senha(self): return self.__senha
+    def get_email(self): 
+        return self.__email
+    def get_senha(self): 
+        return self.__senha
 
     def __str__(self):
         return f"{self.get_id()} - {self.get_nome()}"
