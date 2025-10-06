@@ -19,7 +19,11 @@ class ManterClienteUI:
         if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
             list_dic = []
-            for obj in clientes: list_dic.append(obj.to_json())
+            for obj in clientes: 
+                c = obj.to_json()
+                if "senha" in c:
+                    del c["senha"]
+                list_dic.append(c)
             df = pd.DataFrame(list_dic)
             st.dataframe(df)
 
