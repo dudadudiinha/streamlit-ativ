@@ -83,3 +83,9 @@ class View:
 
     def profissional_excluir(id):
         ProfissionalDAO.excluir(id)
+
+    def profissional_autenticar(email, senha):
+        for c in View.profissional_listar():
+            if c.get_email() == email and c.get_senha() == senha:
+                return {"id": c.get_id(), "nome": c.get_nome()}
+        return None
