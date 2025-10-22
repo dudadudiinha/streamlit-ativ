@@ -5,9 +5,8 @@ class Servico:
         self.set_id(id)
         self.set_descricao(descricao)
         self.set_valor(valor)
-
     def set_id(self, id):
-        if id < 0: raise ValueError("ID não pode ser negativo.")
+        if id is not None and id < 0: raise ValueError("ID não pode ser negativo.")
         self.__id = id
     def set_descricao(self, descricao): 
         if descricao == "": raise ValueError("Descrição não pode ser vazia.")

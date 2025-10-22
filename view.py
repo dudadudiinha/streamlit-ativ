@@ -10,10 +10,15 @@ class View:
         ClienteDAO.inserir(c)
 
     def cliente_listar():
-        return ClienteDAO.listar()
+        r = ClienteDAO.listar()
+        r.sort(key= lambda obj : obj.get_id())
+        return r
 
     def cliente_listar_id(id):
-        return ClienteDAO.listar_id(id)
+        for c in View.cliente_listar():
+            if c.get_id() == id:
+                return c 
+        return None
 
     def cliente_atualizar(id, nome, email, fone, senha):
         c = Cliente(id, nome, email, fone, senha)
@@ -38,10 +43,15 @@ class View:
         ServicoDAO.inserir(s)
 
     def servico_listar():
-        return ServicoDAO.listar()
+        r = ServicoDAO.listar()
+        r.sort(key= lambda obj : obj.get_descricao())
+        return r
 
     def servico_listar_id(id):
-        return ServicoDAO.listar_id(id)
+        for s in View.servico_listar():
+            if s.get_id() == id:
+                return s
+        return None
 
     def servico_atualizar(id, descricao, valor):
         s = Servico(id, descricao, valor)
@@ -55,7 +65,9 @@ class View:
         HorarioDAO.inserir(h)
 
     def horario_listar():
-        return HorarioDAO.listar()
+        r = HorarioDAO.listar()
+        r.sort(key= lambda obj : obj.get_data())
+        return r
 
     def horario_listar_id(id):
         return HorarioDAO.listar_id(id)
@@ -67,12 +79,46 @@ class View:
     def horario_excluir(id):
         HorarioDAO.excluir(id)
 
+    def horario_filtrar_profissional(id_profissional):
+        r=[]
+        for h in View.horario_listar():
+            if h.get_id_profissional() == id_profissional: 
+                r.append(h)
+        return r
+    
+    def horario_filtrar_cliente(id_cliente):
+            r=[]
+            for h in View.horario_listar():
+                if h.get_id_cliente() == id_cliente:
+                    r.append(h)
+            return r
+
+    def horario_agendar_horario(id_profissional):
+        r=[]
+        agora = datetime.now()
+        for h in View.horario_listar():
+            if h.get_data() >= agora and h.get_confirmado() == False and h.get_id_cliente() == None and h.get_id_profissional() == id_profissional:
+                r.append(h)
+        r.sort(key= lambda h :h.get_data())
+        return r
+    
+    def horario_listar_nao_confirmados(id_profissional):
+        r = []
+        agora = datetime.now()
+        for h in View.horario_listar():
+            if h.get_id_profissional() == id_profissional and h.get_id_cliente() is not None and h.get_confirmado() == False:                      
+                r.append(h)
+        r.sort(key=lambda x: x.get_data())
+        return r
+
     def profissional_inserir(nome, especialidade, conselho, email, senha):
         p = Profissional(0, nome, especialidade, conselho, email, senha)
         ProfissionalDAO.inserir(p)
 
     def profissional_listar():
-        return ProfissionalDAO.listar()
+        r = ProfissionalDAO.listar()
+        r.sort(key= lambda obj : obj.get_nome())
+        return r
 
     def profissional_listar_id(id):
         return ProfissionalDAO.listar_id(id)

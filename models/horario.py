@@ -18,10 +18,10 @@ class Horario:
     def set_confirmado(self, confirmado):
         self.__confirmado = confirmado
     def set_id_cliente(self, id_cliente): 
-        if id_cliente < 0: raise ValueError("O ID do cliente não pode ser negativo.")
+        if id_cliente is not None and id_cliente < 0: raise ValueError("O ID do cliente não pode ser negativo.")
         self.__id_cliente = id_cliente
     def set_id_servico(self, id_servico): 
-        if id_servico < 0: raise ValueError("O ID do serviço não pode ser negativo.")
+        if id_servico is not None and id_servico < 0: raise ValueError("O ID do serviço não pode ser negativo.")
         self.__id_servico = id_servico
     def set_id_profissional(self, id_profissional):
         if id_profissional < 0: raise ValueError("O ID do profissional não pode ser negativo.")
