@@ -10,11 +10,7 @@ class AbrirAgendaUI:
         hora_inicio = st.text_input("Informe o horário inicial no formato HH:MM", "10:10")
         hora_fim = st.text_input("Informe o horário final no formato HH:MM", "11:10")
         intervalo = st.text_input("Informe o intervalo entre os horários (min)", "10")
-        if "usuario_id" not in st.session_state:
-             st.error("Erro: Profissional não está logado.")
-             return
         if st.button("Abrir Agenda"):
-            try:
                 id_profissional = st.session_state["usuario_id"]
                 intervalo_min = int(intervalo) 
                 intervalo_delta = timedelta(minutes=intervalo_min)
@@ -26,12 +22,8 @@ class AbrirAgendaUI:
                     horario_atual += intervalo_delta
                     horarios_inseridos += 1
                 if horarios_inseridos > 0:
-                    st.success(f"{horarios_inseridos} horários inseridos com sucesso!")
+                    st.success(f"{horarios_inseridos} horários inseridos com sucesso")
                     time.sleep(4) 
                     st.rerun()
                 else:
-                    st.warning("Nenhum horário foi inserido. Verifique se o horário final é maior que o inicial.")
-            except ValueError:
-                st.error("Formato de data, hora ou intervalo inválido. Use os formatos corretos.")
-            except Exception as e:
-                st.error(f"Ocorreu um erro inesperado: {e}")
+                    st.warning("Nenhum horário foi inserido")

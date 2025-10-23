@@ -11,7 +11,7 @@ class View:
 
     def cliente_listar():
         r = ClienteDAO.listar()
-        r.sort(key= lambda obj : obj.get_id())
+        r.sort(key= lambda obj : obj.get_nome())
         return r
 
     def cliente_listar_id(id):
@@ -87,11 +87,11 @@ class View:
         return r
     
     def horario_filtrar_cliente(id_cliente):
-            r=[]
-            for h in View.horario_listar():
-                if h.get_id_cliente() == id_cliente:
-                    r.append(h)
-            return r
+        r=[]
+        for h in View.horario_listar():
+            if h.get_id_cliente() == id_cliente:
+                r.append(h)
+        return r
 
     def horario_agendar_horario(id_profissional):
         r=[]
