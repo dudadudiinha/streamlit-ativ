@@ -110,6 +110,15 @@ class View:
                 r.append(h)
         r.sort(key=lambda x: x.get_data())
         return r
+    
+    def horario_servicos(id_cliente):
+        r = []
+        for h in View.horario_listar():
+            if h.get_id_cliente() == id_cliente:
+                r.append(h)
+        r.sort(key=lambda h: h.get_data())
+        return r
+
 
     def profissional_inserir(nome, especialidade, conselho, email, senha):
         p = Profissional(0, nome, especialidade, conselho, email, senha)

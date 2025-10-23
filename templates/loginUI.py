@@ -9,7 +9,6 @@ class LoginUI:
         if st.button("Entrar"):
             c = View.cliente_autenticar(email, senha)
             p = View.profissional_autenticar(email, senha)
-
             if c:
                 st.session_state["usuario_tipo"] = "cliente"
                 st.session_state["usuario_id"] = c["id"]
