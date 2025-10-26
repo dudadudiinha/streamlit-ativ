@@ -51,10 +51,13 @@ class ManterHorarioUI:
                 id_servico = servico.get_id() 
             if profissional != None: 
                 id_profissional = profissional.get_id() 
-            View.horario_inserir(datetime.strptime(data, "%d/%m/%Y %H:%M"), confirmado, id_cliente, id_servico, id_profissional) 
-            st.success("Horário inserido com sucesso") 
-            time.sleep(4)
-            st.rerun()
+            try:
+                View.horario_inserir(datetime.strptime(data, "%d/%m/%Y %H:%M"), confirmado, id_cliente, id_servico, id_profissional) 
+                st.success("Horário inserido com sucesso") 
+                time.sleep(4)
+                st.rerun()
+            except ValueError as e:
+                st.error(f"Erro: {e}")
 
     def atualizar():
         horarios = View.horario_listar()
@@ -80,10 +83,13 @@ class ManterHorarioUI:
                 if cliente != None: id_cliente = cliente.get_id()
                 if servico != None: id_servico = servico.get_id()
                 if profissional != None: id_profissional = profissional.get_id()
-                View.horario_atualizar(op.get_id(), datetime.strptime(data, "%d/%m/%Y %H:%M"), confirmado, id_cliente, id_servico, id_profissional)
-                st.success("Horário atualizado com sucesso")
-                time.sleep(4)
-                st.rerun()
+                try:
+                    View.horario_atualizar(op.get_id(), datetime.strptime(data, "%d/%m/%Y %H:%M"), confirmado, id_cliente, id_servico, id_profissional)
+                    st.success("Horário atualizado com sucesso")
+                    time.sleep(4)
+                    st.rerun()
+                except ValueError as e:
+                    st.error(f"Erro: {e}")
 
     def excluir():
         horarios = View.horario_listar()
@@ -92,7 +98,10 @@ class ManterHorarioUI:
         else:
             op = st.selectbox("Exclusão de Horários", horarios)
             if st.button("Excluir"):
-                View.horario_excluir(op.get_id())
-                st.success("Horário excluído com sucesso")
-                time.sleep(4)
-                st.rerun()
+                try:
+                    View.horario_excluir(op.get_id())
+                    st.success("Horário excluído com sucesso")
+                    time.sleep(4)
+                    st.rerun()
+                except ValueError as e:
+                    st.error(f"Erro: {e}")
