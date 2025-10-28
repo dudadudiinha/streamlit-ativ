@@ -58,8 +58,11 @@ class ManterServicoUI:
         else:
             op = st.selectbox("Exclusão de Serviços", servicos)
             if st.button("Excluir"):
-                id = op.get_id()
-                View.servico_excluir(id)
-                st.success("Serviço excluído com sucesso")
-                time.sleep(4)
-                st.rerun()
+                try:
+                    id = op.get_id()
+                    View.servico_excluir(id)
+                    st.success("Serviço excluído com sucesso")
+                    time.sleep(4)
+                    st.rerun()
+                except ValueError as e:
+                    st.error(f"{e}")

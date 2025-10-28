@@ -29,4 +29,4 @@ class AbrirAgendaUI:
                     else:
                         st.warning("Nenhum horário foi inserido")
                 except ValueError as e:
-                    st.error(f"Erro: {e}")
+                    st.error(f"{e}")

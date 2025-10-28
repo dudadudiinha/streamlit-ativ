@@ -42,7 +42,7 @@ class ManterProfissionalUI:
                 time.sleep(4)
                 st.rerun()
             except ValueError as e:
-                st.error(f"Erro: {e}")
+                st.error(f"{e}")
 
     @staticmethod
     def atualizar():
@@ -64,7 +64,7 @@ class ManterProfissionalUI:
                 time.sleep(4)
                 st.rerun()
             except ValueError as e:
-                st.error(f"Erro: {e}")
+                st.error(f"{e}")
     
     @staticmethod
     def excluir():
@@ -81,4 +81,4 @@ class ManterProfissionalUI:
                     time.sleep(4)
                     st.rerun()
                 except ValueError as e:
-                    st.error(f"Erro: {e}")
+                    st.error(f"{e}")

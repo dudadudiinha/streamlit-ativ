@@ -17,4 +17,4 @@ class PerfilProfissionalUI:
                 View.profissional_atualizar(id, nome, especialidade, conselho, email, senha)
                 st.success("Profissinal atualizado com sucesso")
             except ValueError as e:
-                st.error(f"Erro: {e}")
+                st.error(f"{e}")

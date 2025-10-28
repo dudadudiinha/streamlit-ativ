@@ -22,4 +22,4 @@ class LoginUI:
                 st.session_state["categoria_usuario"] = "profissional"
                 st.rerun()
             else:
-                st.write("E-mail ou senha inválidos")
+                st.error("Credenciais inválidas")

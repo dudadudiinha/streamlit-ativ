@@ -39,8 +39,11 @@ class View:
         ClienteDAO.atualizar(c)
 
     def cliente_excluir(id):
+        cliente = View.cliente_listar_id(id)
+        if cliente and cliente.get_email() == "admin":
+            raise ValueError("O admin não pode ser excluído")
         for h in View.horario_listar():
-            if h.get_cliente_id() == id:
+            if h.get_id_cliente() == id:
                 raise ValueError("Não é possível excluir um cliente com um horário agendado")
         ClienteDAO.excluir(id)
 
@@ -56,6 +59,9 @@ class View:
         return None
 
     def servico_inserir(descricao, valor):
+        for obj in View.servico_listar():
+            if obj.get_descricao() == descricao:
+                raise ValueError("Serviço já cadastrado")
         s = Servico(0, descricao, valor)
         ServicoDAO.inserir(s)
 
@@ -71,10 +77,16 @@ class View:
         return None
 
     def servico_atualizar(id, descricao, valor):
+        for obj in View.servico_listar():
+            if obj.get_id() != id and obj.get_descricao() == descricao:
+                raise ValueError("Essa descriçao já foi cadastrada em outro serviço")
         s = Servico(id, descricao, valor)
         ServicoDAO.atualizar(s)
 
     def servico_excluir(id):
+        for h in View.horario_listar():
+            if h.get_id_servico() == id:
+                raise ValueError("Não é possível excluir um serviço com um horário agendado")
         ServicoDAO.excluir(id)
         
     def horario_inserir(data, confirmado, id_cliente, id_servico, id_profissional):
@@ -100,9 +112,9 @@ class View:
         HorarioDAO.atualizar(h)
 
     def horario_excluir(id):
-        for h in View.horario_listar():
-            if h is not None and h.get_id_cliente():
-                raise ValueError("Não é possível excluir um horário que já foi agendado por um cliente")
+        h = View.horario_listar_id(id)
+        if h.get_id_cliente() is not None and h.get_id_cliente() != 0:
+            raise ValueError("Não é possível excluir um horário que já foi agendado por um cliente.")
         HorarioDAO.excluir(id)
 
     def horario_filtrar_profissional(id_profissional):

@@ -16,4 +16,4 @@ class PerfilClienteUI:
                 View.cliente_atualizar(id, nome, email, fone, senha)
                 st.success("Cliente atualizado com sucesso")
             except ValueError as e:
-                st.error(f"Erro: {e}")
+                st.error(f"{e}")

@@ -40,7 +40,7 @@ class ManterClienteUI:
                 time.sleep(2)
                 st.rerun()
             except ValueError as e:
-                st.error(f"Erro: {e}")
+                st.error(f"{e}")
     @staticmethod
     def atualizar():
         clientes= View.cliente_listar()
@@ -59,7 +59,7 @@ class ManterClienteUI:
                 time.sleep(2)
                 st.rerun()
             except ValueError as e:
-                st.error(f"Erro: {e}")
+                st.error(f"{e}")
 
     @staticmethod
     def excluir():
@@ -75,4 +75,4 @@ class ManterClienteUI:
                     time.sleep(2)
                     st.rerun()
                 except ValueError as e:
-                    st.error(f"Erro: {e}")
+                    st.error(f"{e}")
