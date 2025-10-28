@@ -25,7 +25,7 @@ class VisualizarAgendaUI:
                 servico = View.servico_listar_id(h.get_id_servico())
                 if servico:
                     servico_nome = servico.get_descricao()
-            lista_formatada.append({"Data": h.get_data().strftime("%d/%m/%Y %H:%M"), "Confirmado": "Sim" if h.get_confirmado() else "Não", "Cliente": cliente_nome, "Serviço": servico_nome,"ID_Horario": h.get_id()})
+            lista_formatada.append({"id": h.get_id(), "data": h.get_data().strftime("%d/%m/%Y %H:%M"), "confirmado": "Sim" if h.get_confirmado() else "Não", "cliente": cliente_nome, "serviço": servico_nome})
         if len(lista_formatada) > 0:
             df = pd.DataFrame(lista_formatada)
             st.dataframe(df, use_container_width=True)
