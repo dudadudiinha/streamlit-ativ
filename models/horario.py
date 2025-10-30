@@ -1,4 +1,5 @@
 from datetime import datetime
+from models.dao import DAO
 import json
 
 class Horario:
@@ -55,62 +56,21 @@ class Horario:
         horario.set_id_servico(dic["id_servico"])
         horario.set_id_profissional(dic["id_profissional"])
         return horario
-class HorarioDAO:
-    __horarios= []
+class HorarioDAO(DAO):
 
     @classmethod
     def abrir(cls):
-        cls.__horarios = []
+        cls._objetos = []
         try:
             with open("horarios.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
             for dic in list_dic:
                 h = Horario.from_json(dic)
-                cls.__horarios.append(h)
+                cls._objetos.append(h)
         except FileNotFoundError:
             pass
 
     @classmethod
     def salvar(cls):
         with open("horarios.json", mode="w") as arquivo:
-            json.dump(cls.__horarios, arquivo, default = Horario.to_json)
-
-    @classmethod
-    def inserir(cls, h):
-        cls.abrir()
-        id = 0
-        for obj in cls.__horarios:
-            if obj.get_id() > id: 
-                id = obj.get_id()
-        h.set_id(id+1)
-        cls.__horarios.append(h)
-        cls.salvar()
-
-    @classmethod
-    def listar(cls):
-        cls.abrir()
-        return cls.__horarios
-    
-    @classmethod
-    def listar_id(cls, id):
-        cls.abrir()
-        for h in cls.__horarios:
-            if id == h.get_id():
-                return h
-        return None
-    
-    @classmethod
-    def atualizar(cls, h):
-        obj = cls.listar_id(h.get_id())
-        if obj != None:
-            cls.__horarios.remove(obj)
-            cls.__horarios.append(h)
-            cls.salvar()
-    
-    @classmethod
-    def excluir(cls, id):
-        cls.abrir()
-        obj = cls.listar_id(id)
-        if obj != None:
-            cls.__horarios.remove(obj)
-            cls.salvar()
+            json.dump(cls._objetos, arquivo, default = Horario.to_json)

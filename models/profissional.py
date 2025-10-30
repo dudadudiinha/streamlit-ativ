@@ -1,4 +1,5 @@
 import json
+from models.dao import DAO
 from datetime import datetime
 
 class Profissional:
@@ -51,63 +52,21 @@ class Profissional:
     def from_json(dic):
         return Profissional(dic["id"], dic["nome"], dic["especialidade"], dic["conselho"], dic["email"], dic["senha"])
 
-class ProfissionalDAO:
-    __profissionais = []
+class ProfissionalDAO(DAO):
 
     @classmethod
     def abrir(cls):
-        cls.__profissionais = []
+        cls._objetos = []
         try:
             with open("profissionais.json", mode="r") as arquivo:
                 profissionais_json = json.load(arquivo)
                 for obj in profissionais_json:
                     p = Profissional.from_json(obj)
-                    cls.__profissionais.append(p)
+                    cls._objetos.append(p)
         except (FileNotFoundError, json.JSONDecodeError):
             pass
 
     @classmethod
     def salvar(cls):
         with open("profissionais.json", mode="w") as arquivo:
-            json.dump(cls.__profissionais, arquivo, default=Profissional.to_json)
-
-    @classmethod
-    def inserir(cls, obj):
-        cls.abrir()
-        id = 0
-        for profissional in cls.__profissionais:
-            if profissional.get_id() > id:
-                id = profissional.get_id()
-        obj.set_id(id + 1)
-        cls.__profissionais.append(obj)
-        cls.salvar()
-
-    @classmethod
-    def listar(cls):
-        cls.abrir()
-        return cls.__profissionais
-
-    @classmethod
-    def listar_id(cls, id):
-        cls.abrir()
-        for profissional in cls.__profissionais:
-            if profissional.get_id() == id:
-                return profissional
-        return None
-
-    @classmethod
-    def atualizar(cls, obj):
-        cls.abrir()
-        aux = cls.listar_id(obj.get_id())
-        if aux != None:
-            cls.__profissionais.remove(aux)
-            cls.__profissionais.append(obj)
-            cls.salvar()
-
-    @classmethod
-    def excluir(cls, id):
-        cls.abrir()
-        aux = cls.listar_id(id)
-        if aux != None:
-            cls.__profissionais.remove(aux)
-            cls.salvar()
+            json.dump(cls._objetos, arquivo, default=Profissional.to_json)

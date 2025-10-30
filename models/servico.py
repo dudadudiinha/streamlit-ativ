@@ -1,4 +1,5 @@
 import json
+from models.dao import DAO
 
 class Servico:
     def __init__(self, id, descricao, valor):
@@ -27,62 +28,21 @@ class Servico:
     def from_json(dic):
         return Servico(dic["id"], dic["descricao"], dic["valor"])
     
-class ServicoDAO:
-    __servicos = []
+class ServicoDAO(DAO):
 
     @classmethod
     def abrir(cls):
-        cls.__servicos = []
+        cls._objetos = []
         try:
             with open("servicos.json", mode="r") as arquivo:
                 list_dic = json.load(arquivo)
             for dic in list_dic:
                 s = Servico.from_json(dic)
-                cls.__servicos.append(s)
+                cls._objetos.append(s)
         except FileNotFoundError:
             pass
 
     @classmethod
     def salvar(cls):
         with open("servicos.json", mode="w") as arquivo:
-            json.dump(cls.__servicos, arquivo, default = Servico.to_json)
-
-    @classmethod
-    def inserir(cls, s):
-        cls.abrir()
-        id = 0
-        for obj in cls.__servicos:
-            if obj.get_id() > id:
-                id = obj.get_id()
-        s.set_id(id+1)
-        cls.__servicos.append(s)
-        cls.salvar()
-
-    @classmethod
-    def listar(cls):
-        cls.abrir()
-        return cls.__servicos
-    
-    @classmethod
-    def listar_id(cls, id):
-        cls.abrir()
-        for s in cls.__servicos:
-            if s.get_id() == id:
-                return s
-        return None
-    
-    @classmethod
-    def atualizar(cls, s):
-        obj = cls.listar_id(s.get_id())
-        if obj != None:
-            cls.__servicos.remove(obj)
-            cls.__servicos.append(s)
-            cls.salvar()
-
-    @classmethod
-    def excluir(cls, id):
-        cls.abrir()
-        obj = cls.listar_id(id)
-        if obj != None:
-            cls.__servicos.remove(obj)
-            cls.salvar()
+            json.dump(cls._objetos, arquivo, default = Servico.to_json)
