@@ -9,17 +9,20 @@ class LoginUI:
         if st.button("Entrar"):
             c = View.cliente_autenticar(email, senha)
             p = View.profissional_autenticar(email, senha)
-            if c:
+            if c and email == "admin":
+                st.session_state["usuario_tipo"] = "admin"
+                st.session_state["usuario_id"] = c["id"]
+                st.session_state["usuario_nome"] = c["nome"]
+                st.rerun()
+            elif c:
                 st.session_state["usuario_tipo"] = "cliente"
                 st.session_state["usuario_id"] = c["id"]
                 st.session_state["usuario_nome"] = c["nome"]
-                st.session_state["categoria_usuario"] = "cliente"
                 st.rerun()
             elif p:
                 st.session_state["usuario_tipo"] = "profissional"
                 st.session_state["usuario_id"] = p["id"]
                 st.session_state["usuario_nome"] = p["nome"]
-                st.session_state["categoria_usuario"] = "profissional"
                 st.rerun()
             else:
                 st.error("Credenciais inválidas")

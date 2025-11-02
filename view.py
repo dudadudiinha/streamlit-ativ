@@ -32,6 +32,15 @@ class View:
         return None
 
     def cliente_atualizar(id, nome, email, fone, senha):
+        cliente = View.cliente_listar_id(id)
+        if cliente and cliente.get_email() == "admin":
+            if email != "admin":
+                raise ValueError("O e-mail do administrador não pode ser mudado")
+            if nome != "admin":
+                raise ValueError("O nome do administrador não pode ser mudado")
+            c = Cliente(id, "admin", "admin", fone, senha)
+            ClienteDAO.atualizar(c)
+            return
         for c in View.cliente_listar():
             if c.get_email() == email and c.get_id() != id:
                 raise ValueError("Outro cliente já foi cadastrado com esse e-mail")
@@ -142,7 +151,6 @@ class View:
     
     def horario_listar_nao_confirmados(id_profissional):
         r = []
-        agora = datetime.now()
         for h in View.horario_listar():
             if h.get_id_profissional() == id_profissional and h.get_id_cliente() is not None and h.get_confirmado() == False:                      
                 r.append(h)
@@ -156,6 +164,11 @@ class View:
                 r.append(h)
         r.sort(key=lambda h: h.get_data())
         return r
+
+    def horario_concluir(id):
+        h = View.horario_listar_id(id)
+        h.set_concluido(True)
+        HorarioDAO.atualizar(h)
 
     def profissional_inserir(nome, especialidade, conselho, email, senha):
         View.validacao(email)
@@ -188,3 +201,14 @@ class View:
             if c.get_email() == email and c.get_senha() == senha:
                 return {"id": c.get_id(), "nome": c.get_nome()}
         return None
+    
+    def historico(id, tipo):
+        historicos = []
+        for h in View.horario_listar():
+            if tipo == "cliente" and h.get_id_cliente() == id and h.get_concluido():
+                historicos.append(h)
+            elif tipo == "profissional" and h.get_id_profissional() == id and h.get_concluido():
+                historicos.append(h)
+            elif tipo == "admin" and h.get_concluido():
+                historicos.append(h)
+        return historicos

@@ -21,9 +21,12 @@ class ConfirmarServicoUI:
         st.write("Selecione o agendamento para confirmar:")
         opcao_selecionada = st.selectbox("Agendamentos Pendentes", options=opcoes, label_visibility="collapsed")
         if st.button("Confirmar"):
-            indice_selecionado = opcoes.index(opcao_selecionada)
-            horario_a_confirmar = horarios_para_confirmar[indice_selecionado]
-            View.horario_atualizar(horario_a_confirmar.get_id(), horario_a_confirmar.get_data(), True,horario_a_confirmar.get_id_cliente(), horario_a_confirmar.get_id_servico(), horario_a_confirmar.get_id_profissional())                    
-            st.success("Serviço confirmado com sucesso!")
-            time.sleep(4)
-            st.rerun()
+            try:
+                indice_selecionado = opcoes.index(opcao_selecionada)
+                horario_a_confirmar = horarios_para_confirmar[indice_selecionado]
+                View.horario_atualizar(horario_a_confirmar.get_id(), horario_a_confirmar.get_data(), True,horario_a_confirmar.get_id_cliente(), horario_a_confirmar.get_id_servico(), horario_a_confirmar.get_id_profissional())                    
+                st.success("Serviço confirmado com sucesso!")
+                time.sleep(4)
+                st.rerun()
+            except ValueError as e:
+                st.error(f"{e}")
