@@ -29,10 +29,13 @@ class ManterServicoUI:
         descricao = st.text_input("Informe a descrição")
         valor = st.number_input("Informe o valor", format="%.2f")
         if st.button("Inserir"):
-            View.servico_inserir(descricao, valor)
-            st.success("Serviço inserido com sucesso")
-            time.sleep(4)
-            st.rerun()
+            try:
+                View.servico_inserir(descricao, valor)
+                st.success("Serviço inserido com sucesso")
+                time.sleep(4)
+                st.rerun()
+            except ValueError as e:
+                st.error(f"{e}")
 
     @staticmethod
     def atualizar():
@@ -43,12 +46,15 @@ class ManterServicoUI:
             op = st.selectbox("Atualização de Serviços", servicos)
             descricao = st.text_input("Nova descrição", op.get_descricao())
             valor = st.number_input("Novo valor", value=op.get_valor(), format="%.2f")
-        if st.button("Atualizar"): 
-            id = op.get_id()
-            View.servico_atualizar(id, descricao, valor)
-            st.success("Serviço atualizado com sucesso")
-            time.sleep(4)
-            st.rerun()
+        if st.button("Atualizar"):
+            try:
+                id = op.get_id()
+                View.servico_atualizar(id, descricao, valor)
+                st.success("Serviço atualizado com sucesso")
+                time.sleep(4)
+                st.rerun()
+            except ValueError as e:
+                st.error(f"{e}")
 
     @staticmethod
     def excluir():
