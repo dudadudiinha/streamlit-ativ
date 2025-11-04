@@ -31,6 +31,9 @@ class AbrirAgendaUI:
                 horario_atual = datetime.strptime(f"{data} {hora_inicio}", "%d/%m/%Y %H:%M")
                 horario_final = datetime.strptime(f"{data} {hora_fim}", "%d/%m/%Y %H:%M") 
                 horarios_inseridos = 0
+                if horario_atual < datetime.now():
+                    st.error("Não é permitido abrir agenda para horários no passado.")
+                    return
                 while horario_atual < horario_final:
                     View.horario_inserir(horario_atual, False, None, id_servico, id_profissional)
                     horario_atual += intervalo_delta

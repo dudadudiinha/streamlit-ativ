@@ -74,7 +74,11 @@ class ManterHorarioUI:
             if profissional != None: 
                 id_profissional = profissional.get_id() 
             try:
-                View.horario_inserir(datetime.strptime(data, "%d/%m/%Y %H:%M"), confirmado, id_cliente, id_servico, id_profissional) 
+                data_ajeitada = datetime.strptime(data, "%d/%m/%Y %H:%M")
+                if data_ajeitada < datetime.now():
+                    st.error("Não é permitido cadastrar horários no passado.")
+                    return
+                View.horario_inserir(data_ajeitada, confirmado, id_cliente, id_servico, id_profissional) 
                 st.success("Horário inserido com sucesso") 
                 time.sleep(4)
                 st.rerun()
