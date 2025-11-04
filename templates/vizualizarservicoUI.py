@@ -14,7 +14,7 @@ class VizualizarServicoUI:
             if cliente != None: cliente = cliente.get_nome()
             if servico != None: servico = servico.get_descricao()
             if profissional != None: profissional = profissional.get_nome()
-            dic.append({"id": h.get_id(), "data": h.get_data(), "confirmado": h.get_confirmado(), "servico": servico, "profissional": profissional})
+            dic.append({"id": h.get_id(), "data": h.get_data().strftime('%d/%m/%Y %H:%M'), "confirmado": h.get_confirmado(), "servico": servico, "profissional": profissional})
         if dic:
             df = pd.DataFrame(dic)
             st.dataframe(df) 

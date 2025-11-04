@@ -14,11 +14,19 @@ class AgendarServicoUI:
             if len(horarios) == 0:
                 st.write("Nenhum horário disponível")
             else:
-                horario = st.selectbox("Informe o horário", horarios)
-                servicos = View.servico_listar()
-                servico = st.selectbox("Informe o serviço", servicos)
+                opcoes = []
+                for h in horarios:
+                    servico = View.servico_listar_id(h.get_id_servico())
+                    if servico:
+                        descricao = servico.get_descricao()
+                    else:
+                        descricao = "Serviço não definido"
+                    opcoes.append(f"{h.get_id()} | {h.get_data().strftime('%d/%m/%Y %H:%M')} | {descricao}")
+                opcao_escolhida = st.selectbox("Selecione o horário disponível:", opcoes, label_visibility="collapsed")
                 if st.button("Agendar"):
-                    View.horario_atualizar(horario.get_id(), horario.get_data(), False, st.session_state["usuario_id"], servico.get_id(), profissional.get_id())
+                    indice = opcoes.index(opcao_escolhida)
+                    horario = horarios[indice]
+                    View.horario_atualizar(horario.get_id(), horario.get_data(), False, st.session_state["usuario_id"], horario.get_id_servico(), profissional.get_id())
                     st.success("Horário agendado com sucesso")
                     time.sleep(4)
                     st.rerun()

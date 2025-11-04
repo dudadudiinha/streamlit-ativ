@@ -21,7 +21,7 @@ class ManterHorarioUI:
         cliente_str = cliente.get_nome() if cliente else "Sem cliente"
         servico_str = servico.get_descricao() if servico else "Sem serviço"
         prof_str = profissional.get_nome() if profissional else "Sem prof."
-        return f"{h.get_data().strftime('%d/%m/%Y %H:%M')} | {cliente_str} | {servico_str} | {prof_str}"
+        return f"{h.get_id()} - {h.get_data().strftime('%d/%m/%Y %H:%M')} | {cliente_str} | {servico_str} | {prof_str}"
 
     def selectbox_horario(texto, horarios):
         opcoes_formatadas = []
