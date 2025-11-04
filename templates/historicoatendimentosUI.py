@@ -25,5 +25,5 @@ class HistoricoAtendimentosUI:
             else: nome_profissional = ""
             if servico: nome_servico = servico.get_descricao()
             else: nome_servico = ""
-            dados.append({"Data": h.get_data().strftime("%d/%m/%Y %H:%M"), "Cliente": nome_cliente, "Profissional": nome_profissional, "Serviço": nome_servico})
+            dados.append({"ID": h.get_id(), "Data": h.get_data().strftime("%d/%m/%Y %H:%M"), "Cliente": nome_cliente, "Profissional": nome_profissional, "Serviço": nome_servico})
         st.dataframe(pd.DataFrame(dados))
